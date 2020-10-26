@@ -22,7 +22,7 @@ class User extends Authenticatable
         'email',
         'phone',
         'legal_entity',
-        'documento'
+        'document'
     ];
 
     protected $casts = [
