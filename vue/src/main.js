@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-require('@/assets/main.scss');
 import VueTheMask from 'vue-the-mask'
-Vue.use(VueTheMask)
+import axios from 'axios'
+require('@/assets/main.scss');
 
+Vue.use(axios)
+Vue.use(VueTheMask)
 Vue.config.productionTip = false
+axios.defaults.baseURL = "http://localhost:8000/api"
 
 new Vue({
   router,

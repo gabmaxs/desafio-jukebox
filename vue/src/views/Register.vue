@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <h1 class="title">Registrar novo usuário</h1>
-    <form id="form" method="post">
+    <form id="form" @submit.prevent="sendForm">
       <div class="field is-horizontal">
         <div class="field-label is-normal">
           <label class="label">Nome</label>
@@ -9,7 +9,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" required type="text" placeholder="Digite o nome">
+              <input class="input" v-model="user.first_name" required type="text" placeholder="Digite o nome">
             </p>
           </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" required type="text" placeholder="Digite o sobrenome">
+              <input class="input" v-model="user.last_name" required type="text" placeholder="Digite o sobrenome">
             </p>
           </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" required type="email" placeholder="Digite o e-mail">
+              <input class="input" v-model="user.email" required type="email" placeholder="Digite o e-mail">
             </p>
           </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" required v-mask="['(##) ####-####', '(##) #####-####']" type="text" placeholder="Digite o telefone">
+              <input class="input" v-model="user.phone" required v-mask="['(##) ####-####', '(##) #####-####']" type="text" placeholder="Digite o telefone">
             </p>
           </div>
         </div>
@@ -76,7 +76,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" v-mask="'###.###.###-##'"  type="text" placeholder="Digite o CPF">
+              <input class="input" v-model="user.document" v-mask="'###.###.###-##'"  type="text" placeholder="Digite o CPF">
             </p>
           </div>
         </div>
@@ -88,7 +88,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" v-mask="'##.###.###/####-##'"  type="text" placeholder="Digite o CNPJ">
+              <input class="input" v-model="user.document" v-mask="'##.###.###/####-##'"  type="text" placeholder="Digite o CNPJ">
             </p>
           </div>
         </div>
@@ -109,6 +109,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   name: 'Register',
   data() {
@@ -123,9 +124,19 @@ export default {
         }
     }
   },
-  watch: {
-    legal_entity() {
-
+  methods: {
+    sendForm() {
+      return axios.post("/users", 
+        JSON.stringify(this.user), 
+        {
+          headers: {
+            "Content-Type": "application/json" ,
+            "Accept": "application/json" 
+          }
+        }
+      )
+      .then(response => console.log(response))
+      .catch(error => console.log(error))
     }
   }
 }
