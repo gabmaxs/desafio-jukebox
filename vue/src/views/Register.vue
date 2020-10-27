@@ -178,9 +178,3 @@ export default {
   }
 }
 </script>
-
-<style>
-#form {
-  padding: 10px;
-}
-</style>

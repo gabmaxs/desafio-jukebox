@@ -59,11 +59,11 @@
           <div class="field is-narrow">
             <p class="control">
               <label class="radio">
-                <input type="radio" :checked="user.legal_entity == 1" v-model="user.legal_entity" value="1">
+                <input type="radio" :checked="user.legal_entity" v-model="user.legal_entity" value="1">
                 Sim
               </label>
               <label class="radio">
-                <input type="radio" :checked="user.legal_entity == 0" v-model="user.legal_entity" value="0">
+                <input type="radio" :checked="user.legal_entity == false" v-model="user.legal_entity" value="0">
                 Não
               </label>
             </p>
@@ -183,9 +183,3 @@ export default {
   }
 }
 </script>
-
-<style>
-#form {
-  padding: 10px;
-}
-</style>
