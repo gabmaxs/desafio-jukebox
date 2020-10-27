@@ -1,6 +1,7 @@
 <template>
   <div class="register">
     <h1 class="title">Registrar novo usuário</h1>
+    <Message v-if="message.display" :msg="message.text" :type="message.type"/>
     <form id="form" @submit.prevent="sendForm">
       <div class="field is-horizontal">
         <div class="field-label is-normal">
@@ -110,8 +111,12 @@
 
 <script>
 import axios from "axios"
+import Message from '@/components/Message.vue'
 export default {
   name: 'Register',
+  components: {
+    Message
+  },
   data() {
     return {
         user: {
@@ -121,6 +126,11 @@ export default {
           phone: "",
           legal_entity: 0,
           document: "",
+        },
+        message: {
+          text: "",
+          type: "",
+          display: false
         }
     }
   },
@@ -135,9 +145,42 @@ export default {
           }
         }
       )
-      .then(response => console.log(response))
-      .catch(error => console.log(error))
+      .then(response => {
+        this.cleanUser()
+        this.message.type = "Sucesso"
+        this.message.text = response.data.message
+        this.message.display = true
+      })
+      .catch(error => {
+        const status_error = error.response.status
+        if(status_error == 400) {
+          this.message.type = "Erro de validação"
+          this.message.text = Object.values(error.response.data.error_message).shift()[0]
+          this.message.display = true
+        }
+        else {
+          this.message.type = "Erro Interno"
+          this.message.text = error.response.data.error_message
+          this.message.display = true
+        }
+      })
+    },
+    cleanUser() {
+      this.user = {
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        legal_entity: 0,
+        document: "",
+      }
     }
   }
 }
 </script>
+
+<style>
+#form {
+  padding: 10px;
+}
+</style>
