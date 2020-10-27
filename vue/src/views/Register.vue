@@ -1,6 +1,6 @@
 <template>
   <div class="register">
-    <h1>Registrar novo usuário</h1>
+    <h1 class="title">Registrar novo usuário</h1>
     <form id="form" method="post">
       <div class="field is-horizontal">
         <div class="field-label is-normal">
@@ -9,7 +9,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" type="text" placeholder="Digite o nome">
+              <input class="input" required type="text" placeholder="Digite o nome">
             </p>
           </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" type="text" placeholder="Digite o sobrenome">
+              <input class="input" required type="text" placeholder="Digite o sobrenome">
             </p>
           </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" type="email" placeholder="Digite o e-mail">
+              <input class="input" required type="email" placeholder="Digite o e-mail">
             </p>
           </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" type="text" placeholder="Digite o telefone">
+              <input class="input" required v-mask="['(##) ####-####', '(##) #####-####']" type="text" placeholder="Digite o telefone">
             </p>
           </div>
         </div>
@@ -58,41 +58,75 @@
           <div class="field is-narrow">
             <p class="control">
               <label class="radio">
-                <input type="radio" name="member">
+                <input type="radio" v-model="user.legal_entity" value="1">
                 Sim
               </label>
               <label class="radio">
-                <input type="radio" checked name="member">
+                <input type="radio" v-model="user.legal_entity" checked value="0">
                 Não
               </label>
             </p>
           </div>
         </div>
       </div>
-      <div class="field is-horizontal">
+      <div v-if="user.legal_entity == 0" class="field is-horizontal">
         <div class="field-label is-normal">
           <label class="label">CPF</label>
         </div>
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" type="text" placeholder="Digite o CPF">
+              <input class="input" v-mask="'###.###.###-##'"  type="text" placeholder="Digite o CPF">
             </p>
           </div>
         </div>
       </div>
-      <div class="field is-horizontal">
+      <div v-if="user.legal_entity == 1" class="field is-horizontal">
         <div class="field-label is-normal">
           <label class="label">CNPJ</label>
         </div>
         <div class="field-body">
           <div class="field">
             <p class="control">
-              <input class="input" type="text" placeholder="Digite o CNPJ">
+              <input class="input" v-mask="'##.###.###/####-##'"  type="text" placeholder="Digite o CNPJ">
             </p>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <button class="button is-primary">
+                Salvar
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </form>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'Register',
+  data() {
+    return {
+        user: {
+          first_name: "",
+          last_name: "",
+          email: "",
+          phone: "",
+          legal_entity: 0,
+          document: "",
+        }
+    }
+  },
+  watch: {
+    legal_entity() {
+
+    }
+  }
+}
+</script>
