@@ -13,7 +13,7 @@
       <tbody>
         <tr v-for="user in list" v-bind:key="user.id">
           <td>{{ user.id }}</td>
-          <td>{{ user.first_name }}</td>
+          <td>{{ fullName(user) }}</td>
           <td>{{ user.email }}</td>
           <td>
             <div class="buttons is-centered are-small">
@@ -34,5 +34,10 @@ export default {
     props: {
         list: Array
     },
+    computed: {
+        fullName() {
+            return (user) => `${user.first_name}  ${user.last_name}`
+        }
+    }
 }
 </script>
