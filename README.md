@@ -37,7 +37,7 @@
 <p> Após clonar o repositório front-end basta seguir os seguintes passos para executar: </p>
 
 <ol>
-    <li>Instalar as dependencias do projeto com <code>npm install</code> <li>
+    <li>Instalar as dependencias do projeto com <code>npm install</code> </li>
     <li>Ligar o servidor com o comando <code>npm run serve</code> </li>
     <li>Acessar o link gerado através de um navegador Web</li>
 </ol>
